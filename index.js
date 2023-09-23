@@ -1,5 +1,5 @@
 const pg = require('pg');
-const client = new pg.Client('postgres://localhost/fullstack_template_db');
+const client = new pg.Client('postgres://localhost/movies_db');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -20,7 +20,18 @@ const init = async()=> {
   await client.connect();
   console.log('connected to database');
   const SQL = `
-    SQL SETUP AND SEED
+    DROP TABLE IF EXISTS movies;
+    CREATE TABLE movies(
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(255),
+      stars INT
+    );
+    INSERT INTO movies (title, stars) VALUES ('Pulf Fiction', 3);
+    INSERT INTO movies (title, stars) VALUES ('Point Break', 4);
+    INSERT INTO movies (title, stars) VALUES ('Gran Torino', 5);
+    INSERT INTO movies (title, stars) VALUES ('Top Gun', 1);
+    INSERT INTO movies (title, stars) VALUES ('Vertigo', 4);
+    INSERT INTO movies (title, stars) VALUES ('The Matrix', 2);
   `;
   console.log('create your tables and seed data');
 
