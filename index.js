@@ -38,6 +38,9 @@ app.get('/api/movies', async(req, res, next) => {
 app.put('/api/movies/:id', async(req,res,next) => {
   console.log(req.body)
   try {
+    if(req.body.stars < 1 || req.body.stars > 5){
+      throw new Error('Invalid Rating')
+    }
     const SQL =`
     UPDATE movies
     SET title = $1, stars = $2
@@ -49,6 +52,10 @@ app.put('/api/movies/:id', async(req,res,next) => {
   } catch (error) {
     next(error)
   }
+})
+
+app.use((err,req,res,next) => {
+  res.status(500).send(err.message)
 })
 
 const init = async()=> {

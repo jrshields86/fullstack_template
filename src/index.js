@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const App = ()=> {
   const [movies, setMovies] = useState([])
+  const [error, setError] = useState('')
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -15,10 +16,12 @@ const App = ()=> {
   }, []);
 
   const increaseRating = async(movie) => {
-    const newRating = movie.stars + 1
-    const {data} = await axios.put(`/api/movies/${movie.id}`, {title: movie.title, stars: newRating})
-    console.log(data)
-    const newMovies = movies.map((movieMap) => {
+    try {
+      setError('')
+      const newRating = movie.stars + 1
+      const {data} = await axios.put(`/api/movies/${movie.id}`, {title: movie.title, stars: newRating})
+    
+      const newMovies = movies.map((movieMap) => {
         if(movieMap.id === movie.id){
           return data
         }else{
@@ -26,25 +29,38 @@ const App = ()=> {
         }
     })
     setMovies(newMovies)
+
+    } catch (error) {
+      console.log(error.response.data)
+      setError(error.response.data)
+    }
+    
   }
 
   const decreaseRating = async(movie) => {
-    const newRating = movie.stars - 1
-    const {data} = await axios.put(`/api/movies/${movie.id}`, {title: movie.title, stars: newRating})
-    console.log(data)
-    const newMovies = movies.map((movieMap) => {
+    try {
+      setError("")
+      const newRating = movie.stars - 1
+      const {data} = await axios.put(`/api/movies/${movie.id}`, {title: movie.title, stars: newRating})
+       
+      const newMovies = movies.map((movieMap) => {
         if(movieMap.id === movie.id){
           return data
-        }else{
-          return movieMap
+        } else{
+            return movieMap
         }
     })
     setMovies(newMovies)
+    } catch (error) {
+      setError(error.response.data)
+    }
+    
   }
 
   return (
     <div>
       <h1>My Movies</h1>
+      <p>{error ? error: ""}</p>
       <ul>
         {
           movies.map((movie) => {
