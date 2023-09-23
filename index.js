@@ -33,6 +33,7 @@ const init = async()=> {
     INSERT INTO movies (title, stars) VALUES ('Vertigo', 4);
     INSERT INTO movies (title, stars) VALUES ('The Matrix', 2);
   `;
+  await client.query(SQL)
   console.log('create your tables and seed data');
 
   const port = process.env.PORT || 3000;
