@@ -30,4 +30,6 @@ const init = async()=> {
   });
 }
 
-  init();
+init();
+
+console.log()
