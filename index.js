@@ -32,4 +32,3 @@ const init = async()=> {
 
 init();
 
-console.log()
