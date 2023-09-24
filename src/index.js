@@ -57,6 +57,14 @@ const App = ()=> {
     
   }
 
+  const deleteMovie = async (movie) => {
+    const data = await axios.delete(`/api/movies/${movie.id}`)
+    const updatedMovieList = movies.filter((movieFilt) => {
+      return movieFilt.id !== movie.id
+    })
+    setMovies(updatedMovieList)
+  }
+
   return (
     <div>
       <h1>My Movies</h1>
@@ -78,6 +86,7 @@ const App = ()=> {
                     </button>
                   </span>
                 </h3>
+                <button onClick={() =>{deleteMovie(movie)}}>Delete</button>
               </li>
             )
           })
