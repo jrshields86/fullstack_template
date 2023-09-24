@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios'
+import AddMovieForm from './AddMovieForm';
 
 const App = ()=> {
   const [movies, setMovies] = useState([])
@@ -68,7 +69,8 @@ const App = ()=> {
   return (
     <div>
       <h1>My Movies</h1>
-      <p>{error ? error: ""}</p>
+      <p>{error}</p>
+      <AddMovieForm movies={movies} setMovies={setMovies}/>
       <ul>
         {
           movies.map((movie) => {
@@ -98,5 +100,3 @@ const App = ()=> {
 
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(<App />);
-
-console.log('hello world')
